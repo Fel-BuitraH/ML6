@@ -55,7 +55,7 @@ def graficar_frecuencias(frecuencias_1, frecuencias_2=None,
     plt.tight_layout()
 
     # Guardar la gráfica.
-    plt.savefig("imagenes/frecuencia_caracteres.png", dpi=300)
+    plt.savefig("resultados/frecuencia_caracteres.png", dpi=300)
 
     plt.show()
     plt.close()

@@ -2,16 +2,13 @@
 import string
 
 
+
 def preparar_texto(texto):
-    """
-    Prepara el texto para el análisis de caracteres.
-    Conserva letras inglesas, espacios y puntuación.
-    """
 
     texto = texto.lower()
 
     caracteres_validos = string.ascii_lowercase + string.punctuation + string.whitespace
-    caracteres_ignorados = "=+ #[]%"
+    caracteres_ignorados = "=+#[]%"
 
     texto = "".join(
     caracter for caracter in texto
