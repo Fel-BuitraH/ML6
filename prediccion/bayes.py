@@ -27,3 +27,21 @@ def texto_bayes(matriz, alfabeto, longitud=200):
         texto.append(alfabeto[indice])
 
     return ''.join(texto)
+
+def bayes_prueba_matriz(matriz, a, b):
+    
+    N = matriz.sum()
+
+    # Probabilidades
+    p_a = matriz[a, :].sum() / N
+    p_b = matriz[:, b].sum() / N
+
+    # Probabilidades condicionales
+    p_b_a = matriz[a, b] / matriz[a, :].sum()
+    p_a_b = matriz[a, b] / matriz[:, b].sum()
+
+
+    izquierda = p_b_a * p_a
+    derecha = p_a_b * p_b
+
+    return izquierda, derecha

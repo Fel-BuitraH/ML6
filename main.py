@@ -1,12 +1,14 @@
 import readchar
+import numpy as np
 from lector_y_procesador_texto.lector_libro import leer_libro
 from lector_y_procesador_texto.procesador_texto import preparar_texto 
 from estadistica.frecuencia_caracteres import contar_caracteres
 from estadistica.histograma import graficar_frecuencias
 from prediccion.training import matriz_conteos,normalizar_matriz, matriz_csv
 from prediccion.prediccion import prediccion_caracter
-from prediccion.bayes import texto_bayes
+from prediccion.bayes import texto_bayes, bayes_prueba_matriz
 from prediccion.generador_1 import texto_punto_1
+
 
 ruta_libro1= "libros/la_republica.3.epub"
 ruta_libro2 = "libros/el_retrato_de_dorian.3.epub"
@@ -80,3 +82,16 @@ texto_generado_aleatorio = texto_punto_1(textos, alfabeto, longitud=200)
 
 print("\nTexto aleatorio, tarea 1:")
 print(texto_generado_aleatorio)
+
+##Punto 4: Comprobación de Bayes
+
+#Unicamente transiciones validas.
+transiciones_validas = np.where((conteo_total.sum(axis=1) > 0) &(conteo_total.sum(axis=0) > 0))[0]
+a, b = np.random.choice(transiciones_validas, size = 2, replace =True)
+
+L1, L2 = bayes_prueba_matriz(conteo_total, a , b)
+
+print(f"\nComprobación de Bayes para los caracteres '{alfabeto[a]}' y '{alfabeto[b]}':")
+print("P(B|A) * P(A):", L1)
+print("P(A|B) * P(B):", L2)
+print("¿Se cumple Bayes?", L1-L2 < 1e-10)
