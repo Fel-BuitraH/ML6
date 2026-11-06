@@ -1,7 +1,8 @@
 import numpy as np
 import string 
+from pathlib import Path
 
-def texto_bayes(matriz, alfabeto, longitud=200):
+def texto_bayes_orden_1(matriz, alfabeto, longitud=200):
 
     letras = string.ascii_lowercase
 
@@ -26,7 +27,14 @@ def texto_bayes(matriz, alfabeto, longitud=200):
 
         texto.append(alfabeto[indice])
 
-    return ''.join(texto)
+    texto_generado = ''.join(texto)
+
+    # Guardar texto generado
+    ruta = Path("resultados/texto_bayes_orden1.txt")
+    ruta.parent.mkdir(parents=True, exist_ok=True)
+    ruta.write_text(texto_generado, encoding="utf-8")
+
+    return texto_generado
 
 def bayes_prueba_matriz(matriz, a, b):
     
