@@ -5,6 +5,8 @@ from estadistica.frecuencia_caracteres import contar_caracteres
 from estadistica.histograma import graficar_frecuencias
 from prediccion.training import matriz_conteos,normalizar_matriz, matriz_csv
 from prediccion.prediccion import prediccion_caracter
+from prediccion.bayes import texto_bayes
+from prediccion.generador_1 import texto_punto_1
 
 ruta_libro1= "libros/la_republica.3.epub"
 ruta_libro2 = "libros/el_retrato_de_dorian.3.epub"
@@ -48,14 +50,11 @@ matriz_csv(probabilidades, alfabeto, "resultados/matriz_probabilidades_total.csv
 ## PUNTO 2.
 ## -----------------------------------------------------
 
-print("Escribe un carácter (ESC para salir):")
+print("Escribe dos caracteres:")
 
-while True:
+for _ in range(2):
 
     caracter = readchar.readkey().lower()
-
-    if caracter == readchar.key.ESC:
-        break
 
     sugerencias = prediccion_caracter(caracter, probabilidades, alfabeto)
 
@@ -64,3 +63,20 @@ while True:
 
     for siguiente, probabilidad in sugerencias:
         print(f"{repr(siguiente):8} | {probabilidad:.4%}")
+
+
+## -----------------------------------------------------
+## PUNTO 3
+## -----------------------------------------------------
+
+texto_generado_bayes = texto_bayes(probabilidades, alfabeto, longitud=200)
+
+print("\nTexto generado usando Bayes:")
+print(texto_generado_bayes)
+
+textos = texto1_preparado + texto2_preparado
+
+texto_generado_aleatorio = texto_punto_1(textos, alfabeto, longitud=200)
+
+print("\nTexto aleatorio, tarea 1:")
+print(texto_generado_aleatorio)
