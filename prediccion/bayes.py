@@ -45,3 +45,20 @@ def bayes_prueba_matriz(matriz, a, b):
     derecha = p_a_b * p_b
 
     return izquierda, derecha
+
+def bayes_prueba_total(matriz):
+
+    N = matriz.sum()
+
+    # Marginales
+    marginal_a = matriz.sum(axis=1)
+    marginal_b = matriz.sum(axis=0)
+
+    # Productos de probabilidades
+    a1 = matriz / N
+    a2 = matriz / N
+
+    # Comparación de todos los pares
+    validos = (marginal_a[:, None] > 0) & (marginal_b[None, :] > 0)
+
+    return a1[validos], a2[validos]

@@ -6,7 +6,7 @@ from estadistica.frecuencia_caracteres import contar_caracteres
 from estadistica.histograma import graficar_frecuencias
 from prediccion.training import matriz_conteos,normalizar_matriz, matriz_csv
 from prediccion.prediccion import prediccion_caracter
-from prediccion.bayes import texto_bayes, bayes_prueba_matriz
+from prediccion.bayes import texto_bayes, bayes_prueba_matriz, bayes_prueba_total
 from prediccion.generador_1 import texto_punto_1
 
 
@@ -91,7 +91,15 @@ a, b = np.random.choice(transiciones_validas, size = 2, replace =True)
 
 L1, L2 = bayes_prueba_matriz(conteo_total, a , b)
 
+#Prueba aleatoria de Bayes para 2 caracteres aleatorios
 print(f"\nComprobación de Bayes para los caracteres '{alfabeto[a]}' y '{alfabeto[b]}':")
 print("P(B|A) * P(A):", L1)
 print("P(A|B) * P(B):", L2)
-print("¿Se cumple Bayes?", L1-L2 < 1e-10)
+print("¿Se cumple Bayes?", np.isclose(L1, L2, atol=1e-10))
+
+#Prueba aleatoria de Bayes para toda la matriz alfxalf
+
+a1, a2 = bayes_prueba_total(conteo_total)
+print("\nComprobación de Bayes en toda la matriz alfabeto x alfabeto:")
+print(f"Máxima diferencia: {np.max(np.abs(a1 - a2)):.8f}")
+print("¿Se cumple Bayes en toda la matriz?", np.allclose(a1, a2))
