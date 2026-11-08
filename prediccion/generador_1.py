@@ -25,7 +25,6 @@ def texto_punto_1(textos, alfabeto, longitud=200):
 
     indice = np.random.choice(indices)
     texto = [alfabeto[indice]]
-    texto_generado = ''.join(texto)
 
     # Generar los caracteres restantes
     for _ in range(longitud - 1):
@@ -36,6 +35,9 @@ def texto_punto_1(textos, alfabeto, longitud=200):
         )
 
         texto.append(alfabeto[indice])
+
+    # Convertir a string
+    texto_generado = ''.join(texto)
 
     # Guardar el texto generado
     ruta = Path("resultados/texto_punto_1.txt")
